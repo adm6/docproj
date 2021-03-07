@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 
 import my_cons
 from pathlib import Path
@@ -26,12 +27,14 @@ SECRET_KEY = my_cons.SEC_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['f5b0245f3602.ngrok.io',
+                 '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'doctor.apps.DoctorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,4 +121,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'doctor/static/'
+
+
+MEDIA_URL = '/doctor/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'doctor')
+
+STATICFILES_DIRS = [
+    BASE_DIR / "doctor/",
+]
