@@ -6,16 +6,16 @@ from .models import Article
 
 
 # Create your views here.
-class Index(View):
+class IndexView(View):
     def get(self, request):
         template = loader.get_template('doctor/index.html')
         articles = Article.objects.all()
-        print(articles[1].image)
+        # print(articles[1].image)
         # return HttpResponse(template.render())
         return render(request, 'doctor/index.html', {"articles": articles})
 
 
-class ReadArticle(View):
+class ArticleView(View):
     def get(self, request, id):
         try:
             article = Article.objects.get(id=id)
