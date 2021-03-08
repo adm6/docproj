@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Article, Marathon
+from .models import Article, Marathon, Reception, Consultation
 
 
 # Create your views here.
@@ -35,5 +35,19 @@ class MarathonView(View):
 class MarathonResultsView(View):
     def get(self, request, id):
         article = Marathon.objects.get(pk=id)
-        return render(request, 'doctor/emty_page.html', {'article': article})
+        return render(request, 'doctor/marathon_results.html', {'article': article})
+
+
+class ReceptionView(View):
+    def get(self, request):
+        reception = Reception.objects.all()
+        reception = reception[0]
+        return render(request, 'doctor/reception.html', {'reception': reception})
+
+
+class ConsultationView(View):
+    def get(self, request):
+        consultation = Consultation.objects.all()
+        consultation = consultation[0]
+        return render(request, 'doctor/consultation.html', {'consultation': consultation})
 

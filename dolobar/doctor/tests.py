@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Article, Marathon
+from .models import Article, Marathon, Reception, Consultation
 import datetime
 from django.utils import timezone
 from django.test import Client
@@ -14,6 +14,22 @@ class ArticleModel(TestCase):
         self.assertEqual(article.title, 'test article')
         self.assertEqual(article.author, 'test author')
         self.assertEqual(article.content, 'test content')
+
+
+class ReceptionModel(TestCase):
+    def test_reception_created_success(self):
+        Reception.objects.create(title='test title', content='test content')
+        article = Reception.objects.get(title='test title')
+        self.assertEqual(article.title, 'test title')
+        self.assertEqual(article.content, 'test content')
+
+
+class ConsultationModel(TestCase):
+    def test_reception_created_success(self):
+        Consultation.objects.create(title='test title', content='test content')
+        consultation = Consultation.objects.get(title='test title')
+        self.assertEqual(consultation.title, 'test title')
+        self.assertEqual(consultation.content, 'test content')
 
 
 class MarathonModel(TestCase):
@@ -90,4 +106,18 @@ class PagesTest(TestCase):
         marathon = Marathon.objects.get(title='test1 title')
         c = Client()
         response = c.get(f'/doctor/marathon/{marathon.pk}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_reception_page(self):
+        Reception.objects.create(title='test1 title', content='test1 content')
+        reception = Reception.objects.get(title='test1 title')
+        c = Client()
+        response = c.get(f'/doctor/reception/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_consultation_page(self):
+        Consultation.objects.create(title='test1 title', content='test1 content')
+        consultation = Consultation.objects.get(title='test1 title')
+        c = Client()
+        response = c.get(f'/doctor/consultation/')
         self.assertEqual(response.status_code, 200)

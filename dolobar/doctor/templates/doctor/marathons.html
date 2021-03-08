@@ -4,60 +4,32 @@
 
 
 {% block content %}
-
-
-
+<div class="col-sm">
+{% for marathon in marathons %}
+  <h2  class="text-center">{{marathon.title}}</h2>
+  {% if marathon.until_start > 1 %}
+  <button type="button" class="btn btn-success btn-sm btn-block">Boshlanishiga {{ marathon.until_start }} kun qoldi.</button>
+  {% elif marathon.until_end > 1 %}
+  <button type="button" class="btn btn-info btn-sm btn-block">Marafon davom etmoqda</button>
+  {% else %}
+  <button type="button" class="btn btn-danger btn-sm btn-block">Marafon yakunlangan.</button>
+  {% endif %}
+  {% load static %}
+  <div class="my_photo text-center"><img src="{% static marathon.image %}" class="img-fluid" alt="my photo"></div>
+  {% if marathon.until_start > 1 %}
+  <button type="button" class="btn btn-success btn-lg btn-block">Marafonda qatnashish</button>
+  {% elif marathon.until_end > 1 %}
+  <!--      <button type="button" class="btn btn-info btn-sm btn-block">Marafon davom etmoqda</button>-->
+  {% else %}
+  <button type="button" onclick="location.href='{% url 'marathonresults' marathon.pk %}';" class="btn btn-secondary btn-sm btn-block">Marafon natijalari</button>
+  {% endif %}
+  <p>{{marathon.information}}</p>
+  <!--        <p>{{marathon.delta}}</p>-->
+  <p>{{article.created_at}}</p>
+  <hr>
+  <br>
+{% endfor %}
 </div>
-<!--<div class="col-sm-8">-->
-<!--      {% for article in articles %}-->
-<!--      <h2 class="text-center">-->
-<!--        <a href="{% url 'article' article.id %}">{{article.title}}</a>-->
-<!--      </h2>-->
-<!--      <div class="my_photo"><img src="{{article.image}}" class="img-fluid" alt="my photo"></div>-->
-<!--&lt;!&ndash;      <p>{{article.content}}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;      <h5>{{article.author}}</h5>&ndash;&gt;-->
-<!--      <p>{{article.created_at}}</p>-->
-<!--      <br>-->
-<!--      {% endfor %}-->
-<!--</div>-->
-
-
-      {% for marathon in marathons %}
-
-    <div class="col-sm">
-      <h2  class="text-center">{{marathon.title}}</h2>
-
-
-      {% if marathon.until_start > 1 %}
-      <button type="button" class="btn btn-success btn-sm btn-block">Boshlanishiga {{ marathon.until_start }} kun qoldi.</button>
-      {% elif marathon.until_end > 1 %}
-      <button type="button" class="btn btn-info btn-sm btn-block">Marafon davom etmoqda</button>
-      {% else %}
-      <button type="button" class="btn btn-danger btn-sm btn-block">Marafon yakunlangan.</button>
-      {% endif %}
-
-        {% load static %}
-      <div class="my_photo text-center"><img src="{% static marathon.image %}" class="img-fluid" alt="my photo"></div>
-
-
-
-      {% if marathon.until_start > 1 %}
-      <button type="button" class="btn btn-success btn-lg btn-block">Marafonda qatnashish</button>
-      {% elif marathon.until_end > 1 %}
-<!--      <button type="button" class="btn btn-info btn-sm btn-block">Marafon davom etmoqda</button>-->
-      {% else %}
-      <button type="button" onclick="location.href='{% url 'marathonresults' marathon.pk %}';" class="btn btn-secondary btn-sm btn-block">Marafon natijalari</button>
-      {% endif %}
-
-
-
-
-      <p>{{marathon.information}}</p>
-<!--        <p>{{marathon.delta}}</p>-->
-      <p>{{article.created_at}}</p>
-        <hr>
-      <br>
-      {% endfor %}
 {% endblock %}
 
 
