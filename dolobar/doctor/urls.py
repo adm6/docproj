@@ -1,13 +1,15 @@
 from django.urls import path, include
 from . import views
-from .views import IndexView, ArticleView
+from .views import IndexView, ArticleView, MarathonView, MarathonResultsView
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
-    path('article/<int:id>', ArticleView.as_view(), name='article')
+    path('article/<int:id>', ArticleView.as_view(), name='article'),
+    path('marathon/', MarathonView.as_view(), name='marathons'),
+    path('marathon/<int:id>', MarathonResultsView.as_view(), name='marathonresults'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

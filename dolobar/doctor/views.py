@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import Article
+from .models import Article, Marathon
 
 
 # Create your views here.
@@ -24,3 +24,16 @@ class ArticleView(View):
             return render(request, 'doctor/article.html', {"article": article})
         except Article.DoesNotExist:
             return HttpResponseNotFound()
+
+
+class MarathonView(View):
+    def get(self, request):
+        marathons = Marathon.objects.order_by('-starting_day')
+        return render(request, 'doctor/marathons.html', {'marathons': marathons})
+
+
+class MarathonResultsView(View):
+    def get(self, request, id):
+        article = Marathon.objects.get(pk=id)
+        return render(request, 'doctor/emty_page.html', {'article': article})
+
