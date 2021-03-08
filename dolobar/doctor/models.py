@@ -54,3 +54,13 @@ class Consultation(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Pedometer(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    image = models.ImageField(upload_to='static/doctor', default='def_img_for_articles.jpg')
+    # created_at = models.DateTimeField()
+
+    def __str__(self):
+        return self.title

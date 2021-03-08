@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Article, Marathon, Reception, Consultation
+from .models import Article, Marathon, Reception, Consultation, Pedometer
 import datetime
 from django.utils import timezone
 from django.test import Client
@@ -22,6 +22,14 @@ class ReceptionModel(TestCase):
         article = Reception.objects.get(title='test title')
         self.assertEqual(article.title, 'test title')
         self.assertEqual(article.content, 'test content')
+
+
+class PedometerModel(TestCase):
+    def test_pedometer_created_success(self):
+        Pedometer.objects.create(title='test title', content='test content')
+        pedometer = Pedometer.objects.get(title='test title')
+        self.assertEqual(pedometer.title, 'test title')
+        self.assertEqual(pedometer.content, 'test content')
 
 
 class ConsultationModel(TestCase):
@@ -115,9 +123,26 @@ class PagesTest(TestCase):
         response = c.get(f'/doctor/reception/')
         self.assertEqual(response.status_code, 200)
 
+    def test_pedometer_page(self):
+        Pedometer.objects.create(title='test1 title', content='test1 content')
+        c = Client()
+        response = c.get(f'/doctor/pedometer/')
+        self.assertEqual(response.status_code, 200)
+
     def test_consultation_page(self):
         Consultation.objects.create(title='test1 title', content='test1 content')
         consultation = Consultation.objects.get(title='test1 title')
         c = Client()
         response = c.get(f'/doctor/consultation/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_articles_page(self):
+        Article.objects.create(title='test article', author='test author', content='test content',
+                               created_at=datetime.datetime.now(tz=timezone.utc))
+        Article.objects.create(title='test1 article', author='test1 author', content='test1 content',
+                               created_at=datetime.datetime.now(tz=timezone.utc))
+        Article.objects.create(title='test2 article', author='test2 author', content='test2 content',
+                               created_at=datetime.datetime.now(tz=timezone.utc))
+        c = Client()
+        response = c.get(f'/doctor/articles/')
         self.assertEqual(response.status_code, 200)

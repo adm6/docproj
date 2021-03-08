@@ -1,0 +1,58 @@
+{% extends "doctor/base.html" %}
+
+{% block title %}Доктор Дилобар Хабибуллаевнадан кизикарли маколалар{% endblock %}
+
+
+{% block content %}
+
+
+
+</div>
+<!--<div class="col-sm-8">-->
+<!--      {% for article in articles %}-->
+<!--      <h2 class="text-center">-->
+<!--        <a href="{% url 'article' article.id %}">{{article.title}}</a>-->
+<!--      </h2>-->
+<!--      <div class="my_photo"><img src="{{article.image}}" class="img-fluid" alt="my photo"></div>-->
+<!--&lt;!&ndash;      <p>{{article.content}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;      <h5>{{article.author}}</h5>&ndash;&gt;-->
+<!--      <p>{{article.created_at}}</p>-->
+<!--      <br>-->
+<!--      {% endfor %}-->
+<!--</div>-->
+
+
+      {% for article in articles %}
+
+    <div class="col-sm">
+      <h2 class="text-center">
+        <a href="{% url 'article' article.id %}">{{article.title}}</a>
+      </h2>
+        {% load static %}
+      <div class="my_photo text-center"><img src="{% static article.image %}" class="img-fluid" alt="my photo"></div>
+      <p>{{ article.content | truncatewords:"20" }}</p>
+      <small>
+      <em>{{article.author}}</em><br>
+      <em>{{article.created_at}}</em>
+      </small>
+        <hr>
+      <br>
+      {% endfor %}
+{% endblock %}
+
+
+
+
+<!--<div class="container" style="margin-top:30px">-->
+<!--  <div class="row">-->
+<!--    <div class="col-sm">-->
+<!--      <h2  class="text-center">{{article.title}}</h2>-->
+<!--        {% load static %}-->
+<!--      <div class="my_photo text-center"><img src="{% static article.image %}" class="img-fluid" alt="my photo"></div>-->
+<!--      <p>{{article.content}}</p>-->
+<!--      <h5>{{article.author}}</h5>-->
+<!--      <p>{{article.created_at}}</p>-->
+<!--      <br>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
